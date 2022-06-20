@@ -5,23 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 class TokenProvider with ChangeNotifier {
-  Future<void> checkToken(String token) async {
-    String url = "https://api.intra.42.fr/oauth/token/info";
-    try {
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {'Authorization': 'Bearer $token'},
-      );
-      if (response.statusCode == 200) {
-        print(response.body);
-      } else {
-        throw Exception("failed to load data");
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   Future<void> fetchToken() async {
     String secret =
         "97245368eb40cfc46b195cd05b29a927bc5de35da8ae2aae67a8dc54bed7b214";
@@ -42,7 +25,6 @@ class TokenProvider with ChangeNotifier {
         final LocalStorage storage = LocalStorage('client_info');
         storage.ready.then((_) async {
           await storage.setItem("client", responseObject);
-          print(storage.getItem("client")["access_token"]);
         });
       } else {
         throw Exception("failed to load data");

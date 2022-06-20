@@ -2,7 +2,7 @@ import 'package:app/not_found.dart';
 import 'package:app/providers/get_user.dart';
 import 'package:app/providers/token.dart';
 import 'package:app/views/home/home.dart';
-import 'package:app/views/home/user.dart';
+import 'package:app/views/search/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

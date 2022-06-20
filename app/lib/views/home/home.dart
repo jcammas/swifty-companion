@@ -17,14 +17,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    final LocalStorage storage = LocalStorage('client_info');
-    storage.ready.then((_) async {
-      if (storage.getItem("client")["access_token"] != null) {
-      } else {
-        Provider.of<TokenProvider>(context, listen: false).fetchToken();
-      }
-    });
-
+    Provider.of<TokenProvider>(context, listen: false).fetchToken();
     super.initState();
   }
 
@@ -44,7 +37,7 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: const Center(
             child: Text(
-              "Swifty-Companion 42",
+              "Swifty-Companion",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
@@ -59,15 +52,11 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.all(20),
-                child: const Text(
-                  'Chercher un étudiant de 42 avec son login !',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    // ignore: use_full_hex_values_for_flutter_colors
-                    color: Color(0XFF0434343),
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
+                padding: const EdgeInsets.all(10),
+                child: SizedBox(
+                  width: screenWidth * 0.5,
+                  child: const Image(
+                    image: AssetImage("assets/images/42.png"),
                   ),
                 ),
               ),
@@ -118,6 +107,19 @@ class _HomeState extends State<Home> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
+                                final LocalStorage storage =
+                                    LocalStorage('client_info');
+                                storage.ready.then((_) async {
+                                  if (storage
+                                          .getItem("client")["access_token"] !=
+                                      null) {
+                                    return;
+                                  } else {
+                                    Provider.of<TokenProvider>(context,
+                                            listen: false)
+                                        .fetchToken();
+                                  }
+                                });
                                 if (nameController.text.isEmpty) {
                                 } else {
                                   Object arguments = {

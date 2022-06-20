@@ -1,5 +1,6 @@
 import 'package:app/models/user.dart';
 import 'package:app/providers/get_user.dart';
+import 'package:app/views/search/widgets/profile.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
@@ -70,85 +71,18 @@ class _UserDetailsState extends State<UserDetails> {
                       SizedBox(
                         height: screenHeight * 0.01,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: ExpansionTileCard(
-                          key: profile,
-                          leading: SizedBox(
-                            child: Image.network(snapshot.data!.imgUrl,
-                                fit: BoxFit.cover),
-                          ),
-                          title: Text(
-                            snapshot.data!.login,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0XFF434343),
-                            ),
-                          ),
-                          subtitle: Text(
-                            snapshot.data!.email,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0XFF434343),
-                            ),
-                          ),
-                          children: <Widget>[
-                            const Divider(
-                              thickness: 1.0,
-                              height: 1.0,
-                            ),
-                            SizedBox(
-                              height: screenHeight * 0.02,
-                            ),
-                            Text(
-                              "Evalutation points : ${snapshot.data!.pointCorrec.toString()}",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0XFF434343),
-                              ),
-                            ),
-                            SizedBox(
-                              height: screenHeight * 0.005,
-                            ),
-                            Text(
-                              "Wallet : ${snapshot.data!.wallet.toString()} ₳",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0XFF434343),
-                              ),
-                            ),
-                            SizedBox(
-                              height: screenHeight * 0.005,
-                            ),
-                            Text(
-                              "level : ${p.toString()} %",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0XFF434343),
-                              ),
-                            ),
-                            SizedBox(
-                              height: screenHeight * 0.005,
-                            ),
-                            Text(
-                              "grade : ${snapshot.data!.cursusUsers[snapshot.data!.cursusUsers.length - 1]["grade"].toString()}",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0XFF434343),
-                              ),
-                            ),
-                            SizedBox(
-                              height: screenHeight * 0.02,
-                            ),
-                          ],
-                        ),
-                      ),
+                      Profile(
+                          imgUrl: snapshot.data!.imgUrl,
+                          login: snapshot.data!.login,
+                          email: snapshot.data!.email,
+                          grade: snapshot
+                              .data!
+                              .cursusUsers[snapshot.data!.cursusUsers.length -
+                                  1]["grade"]
+                              .toString(),
+                          correc: snapshot.data!.pointCorrec,
+                          level: p,
+                          wallet: snapshot.data!.wallet),
                       SizedBox(
                         height: screenHeight * 0.01,
                       ),
@@ -254,9 +188,19 @@ class _UserDetailsState extends State<UserDetails> {
                       setState(() {});
                     }
                   } catch (e) {
-                    return const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Center(child: Text("Ce login n'existe pas.")),
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          "$login n'est pas un étudiant de 42, merci de réessayer !",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0XFF434343),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     );
                   }
                   return const Padding(
