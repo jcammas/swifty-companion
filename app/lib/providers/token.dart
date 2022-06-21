@@ -6,10 +6,8 @@ import 'package:http/http.dart' as http;
 
 class TokenProvider with ChangeNotifier {
   Future<void> fetchToken() async {
-    String secret =
-        "97245368eb40cfc46b195cd05b29a927bc5de35da8ae2aae67a8dc54bed7b214";
-    String id =
-        "49c6f1438a2717840359d69ecb73e41c21c1a50aedf916a0cccf850a8b85e09a";
+    String secret = "";
+    String id = "";
     String url = 'https://api.intra.42.fr/oauth/token';
     Map body = {
       "grant_type": "client_credentials",
